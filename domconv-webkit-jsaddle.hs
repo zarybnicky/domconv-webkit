@@ -995,7 +995,6 @@ intf2meth _ _ _ = []
 -- where zz is a type variable or type name of the method return type.
 
 mkMethod :: String -> [H.HsPat] -> H.HsType -> H.HsExp
-
 mkMethod meth args rett = H.HsDo [let1, let2, ret] where
   args' = init args
   cast ts (H.HsPVar (H.HsIdent hn)) =

@@ -5,7 +5,6 @@ import Data.List
 import Debug.Trace (trace)
 import qualified Utils as U
 import qualified IDLSyn as I
-import qualified Language.Haskell.Syntax as H (Module(..))
 import Data.Char (isSpace, toUpper)
 import SplitBounds (parts)
 import Data.Map (Map)

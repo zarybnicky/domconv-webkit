@@ -46,13 +46,8 @@ module LexM
 import qualified SymbolTable
 import SrcLoc
 import IDLToken
-import IDLSyn
-import PreProc
-import Data.IORef  ( IORef, newIORef, readIORef, writeIORef )
-import Utils   ( tryOpen, dropSuffix )
-import System.IO      ( hPutStrLn, stderr )
-import Control.Monad (ap, when)
-import Data.Char    ( toLower )
+import Data.IORef (IORef, newIORef, readIORef, writeIORef)
+import Control.Monad (ap)
 
 -- components threaded by the monad (apart from
 -- the IO token.)
@@ -217,6 +212,4 @@ instance Monad LexM where
   return = returnLexM
 
 \end{code}
-
-
 

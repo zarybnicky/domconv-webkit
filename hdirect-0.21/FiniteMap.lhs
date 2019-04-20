@@ -186,7 +186,7 @@ listToFM = addListToFM emptyFM
 %************************************************************************
 
 \begin{code}
-addToFM fm key elt = addToFM_C (\ _ new -> new) fm key elt
+addToFM = addToFM_C (\ _ new -> new)
 
 addToFM_C _        EmptyFM key elt = unitFM key elt
 addToFM_C combiner (Branch key elt size fm_l fm_r) new_key new_elt
@@ -195,10 +195,9 @@ addToFM_C combiner (Branch key elt size fm_l fm_r) new_key new_elt
         GT -> mkBalBranch key elt fm_l (addToFM_C combiner fm_r new_key new_elt)
         EQ -> Branch new_key (combiner elt new_elt) size fm_l fm_r
 
-addListToFM fm key_elt_pairs = addListToFM_C (\ _ new -> new) fm key_elt_pairs
+addListToFM = addListToFM_C (\ _ new -> new)
 
-addListToFM_C combiner fm key_elt_pairs
-  = foldl add fm key_elt_pairs  -- foldl adds from the left
+addListToFM_C combiner = foldl add  -- foldl adds from the left
   where
     add f (key,elt) = addToFM_C combiner f key elt
 \end{code}
@@ -211,7 +210,7 @@ delFromFM (Branch key elt _ fm_l fm_r) del_key
         LT -> mkBalBranch key elt (delFromFM fm_l del_key) fm_r
         EQ -> glueBal fm_l fm_r
 
-delListFromFM fm keys = foldl delFromFM fm keys
+delListFromFM = foldl delFromFM
 \end{code}
 
 %************************************************************************
@@ -254,7 +253,7 @@ minusFM fm1 (Branch split_key _ _ left right)
     lts = splitLT fm1 split_key         -- NB gt and lt, so the equal ones
     gts = splitGT fm1 split_key         -- are not in either.
 
-intersectFM fm1 fm2 = intersectFM_C (\ _ right -> right) fm1 fm2
+intersectFM = intersectFM_C (\ _ right -> right)
 
 intersectFM_C _        _   EmptyFM = emptyFM
 intersectFM_C _        EmptyFM _   = emptyFM
@@ -327,10 +326,10 @@ lookupFM (Branch key elt _ fm_l fm_r) key_to_find
         EQ -> Just elt
 
 key `elemFM` fm
-  = case (lookupFM fm key) of { Nothing -> False; _ -> True }
+  = case lookupFM fm key of { Nothing -> False; _ -> True }
 
 lookupWithDefaultFM fm deflt key
-  = case (lookupFM fm key) of { Nothing -> deflt; Just elt -> elt }
+  = case lookupFM fm key of { Nothing -> deflt; Just elt -> elt }
 \end{code}
 
 %************************************************************************
@@ -340,9 +339,9 @@ lookupWithDefaultFM fm deflt key
 %************************************************************************
 
 \begin{code}
-fmToList fm = foldFM (\ key elt rest -> (key,elt) : rest) [] fm
-keysFM fm   = foldFM (\ key _   rest -> key : rest)       [] fm
-eltsFM fm   = foldFM (\ _   elt rest -> elt : rest)       [] fm
+fmToList = foldFM (\ key elt rest -> (key,elt) : rest) []
+keysFM   = foldFM (\ key _   rest -> key : rest)       []
+eltsFM   = foldFM (\ _   elt rest -> elt : rest)       []
 \end{code}
 
 

@@ -21,7 +21,7 @@ import BasicTypes
 The abstract syntax for declarations/definitions in IDL.
 
 \begin{code}
-data Defn 
+data Defn
  = Typedef    Type [Attribute] [Id]
  | TypeDecl   Type  --structs, unions (w/ tag) and enums.
  | ExternDecl Type [Id]
@@ -69,9 +69,9 @@ by the parser, but the desugarer employs it to decorate Ids
 prior to CoreIDL translation.
 
 \begin{code}
-data Id 
- = Id String 
- | AttrId  [Attribute] Id  
+data Id
+ = Id String
+ | AttrId  [Attribute] Id
  | ArrayId Id [Expr]  -- 0,1 or 2 expressions.
  | Pointed [[Qualifier]] Id
  | CConvId CallConv Id
@@ -81,7 +81,7 @@ data Id
  | Deleter
  | FunId Id (Maybe CallConv) [Param]
    deriving ( Eq, Ord, Show )
- 
+
 \end{code}
 
 Big type encoding type constants and constructors provided
@@ -96,8 +96,8 @@ data Type
  | TyChar
  | TySigned  Bool
  | TyWChar
- | TyBool   
- | TyAny    
+ | TyBool
+ | TyAny
  | TyObject
  | TyStruct (Maybe Id) [Member] (Maybe Int)
  | TyString (Maybe Expr)
@@ -157,12 +157,12 @@ data Param      = Param Optionality Id Type [Attribute] [ExtAttribute]
 
 type Member     = (Type, [Attribute], [Id])
 
-data Attribute  
+data Attribute
  = Attrib Id [AttrParam]  -- name(e1,..,en)
  | Mode ParamDir
    deriving ( Eq, Ord, Show )
 
-data AttrParam 
+data AttrParam
   = AttrExpr Expr
   | EmptyAttr         -- size_is(,e) => [EmptyAttr,attr_param e]
   | AttrLit Literal
@@ -173,7 +173,7 @@ data ExtAttribute
   = ExtAttr Id [Param]
    deriving ( Eq, Ord, Show )
 
-data Switch    = Switch [CaseLabel] (Maybe SwitchArm) 
+data Switch    = Switch [CaseLabel] (Maybe SwitchArm)
                  deriving ( Eq, Ord, Show )
 data CaseLabel = Case [Expr] | Default
                  deriving ( Eq, Ord, Show )

@@ -6,6 +6,9 @@ The @PP@ interface augments the standard @Pretty@ interface
 a little for the task at hand.
 
 \begin{code}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+
 module PP
        (
          PPDoc
@@ -203,8 +206,8 @@ lbrace         = \ _ -> P.lbrace
 rbrace :: PPDoc a
 rbrace         = \ _ -> P.rbrace
 
-(<>) :: PPDoc a -> PPDoc a -> PPDoc a
-(<>) d1 d2     = \ v -> (P.<>) (d1 v) (d2 v)
+instance {-# OVERLAPPING #-} Semigroup (PPDoc a) where
+  (<>) d1 d2     = \ v -> (P.<>) (d1 v) (d2 v)
 
 (<+>) :: PPDoc a -> PPDoc a -> PPDoc a
 (<+>) d1 d2    = \ v -> (P.<+>) (d1 v) (d2 v)
